@@ -17,6 +17,10 @@ def check_password(password):
         logging.warning("Password does not have numeric number")
         return 'Invalid password! your password should have one numeric number'
     
+    if not re.match(r'^[^@#$%^&*]*[@#$%^&*][^@#$%^&*]*$', password):
+        logging.warning("Password does not have Special characters")
+        return 'Invalid password! your password should have one special character'
+    
     return 'Valid password'
 
 
