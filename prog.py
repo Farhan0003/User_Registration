@@ -1,22 +1,19 @@
 import re
 import logging
 
-logging.basicConfig(filename='mobile.log',level=logging.DEBUG)
+logging.basicConfig(filename='password.log',level=logging.DEBUG)
 
-def check_mobile(number):
+def check_password(password):
 
-    if len(number)!=13:
-        logging.error("checking the length of the mobile number")
-        return 'Invalid Number'
+    if not re.match(r'^.{8,}$',password):
+        logging.warning("Password length is less than 8 characters ")
+        return 'your password should contain more than 8 chracters'
     
-    if not re.match (r'^[91]',number):
-        logging.error("checking the country code")
-        return 'Invalid Number'
-    
-    return 'Valid Number'
+    return 'Valid password'
 
 
 
-number=input("Enter the number: ")
-result = check_mobile(number)
+
+password = input("Enter the password: ")
+result=check_password(password)
 print(result)
