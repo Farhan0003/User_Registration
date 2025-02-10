@@ -5,9 +5,13 @@ logging.basicConfig(filename='password.log',level=logging.DEBUG)
 
 def check_password(password):
 
-    if not re.match(r'^.{8,}$',password):
+    if not re.match (r'^.{8,}$',password):
         logging.warning("Password length is less than 8 characters ")
-        return 'your password should contain more than 8 chracters'
+        return 'Invalid password! your password should contain more than 8 chracters'
+    
+    if not re.search(r'[A-Z]',password):
+        logging.warning("Password does not have upper case")
+        return 'Invalid password! your password should have one uppercase'
     
     return 'Valid password'
 
