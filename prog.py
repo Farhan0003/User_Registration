@@ -1,24 +1,18 @@
-
 import re
 import logging
 
-logging.basicConfig(filename='demo.log',level=logging.DEBUG)
+logging.basicConfig(filename='email.log',level=logging.DEBUG)
 
-def name_check(name):
+def check_mail(mail_to_check):
+  pattern='^[a-zA-Z0-9.+-_%]+@[a-zA-Z0-9.-]+\.[a-zA-Z]'
 
-    if len(name)<3:
-        logging.debug("cheking the name length")
-        return 'Invalid name!'
-    
-    if not re.match(r'^[A-Z]',name):
-        logging.debug("check the first alphabet of name...it should be Capital")
-        return 'Invalid name!'
-    
-    return 'Valid name!'
-    
-First_name=input("Enter the First name: ")
-last_name=input("Enter the Last name: ")
-result=name_check(First_name)
-print(result)
-result1=name_check(last_name)
-print(result1)
+  if re.match(pattern,mail_to_check):
+    return True
+  else:
+    return False  
+
+email=input("Enter an email addredd: ")
+if check_mail(email):
+  logging.info(f"{email} is a Valid Email Address.")
+else:
+  logging.error(f"{email} is an Invalid Email Address.")
