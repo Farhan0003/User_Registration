@@ -13,6 +13,10 @@ def check_password(password):
         logging.warning("Password does not have upper case")
         return 'Invalid password! your password should have one uppercase'
     
+    if not re.search(r'[0-9]',password):
+        logging.warning("Password does not have numeric number")
+        return 'Invalid password! your password should have one numeric number'
+    
     return 'Valid password'
 
 
