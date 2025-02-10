@@ -1,18 +1,22 @@
 import re
 import logging
 
-logging.basicConfig(filename='email.log',level=logging.DEBUG)
+logging.basicConfig(filename='mobile.log',level=logging.DEBUG)
 
-def check_mail(mail_to_check):
-  pattern='^[a-zA-Z0-9.+-_%]+@[a-zA-Z0-9.-]+\.[a-zA-Z]'
+def check_mobile(number):
 
-  if re.match(pattern,mail_to_check):
-    return True
-  else:
-    return False  
+    if len(number)!=13:
+        logging.error("checking the length of the mobile number")
+        return 'Invalid Number'
+    
+    if not re.match (r'^[91]',number):
+        logging.error("checking the country code")
+        return 'Invalid Number'
+    
+    return 'Valid Number'
 
-email=input("Enter an email addredd: ")
-if check_mail(email):
-  logging.info(f"{email} is a Valid Email Address.")
-else:
-  logging.error(f"{email} is an Invalid Email Address.")
+
+
+number=input("Enter the number: ")
+result = check_mobile(number)
+print(result)
