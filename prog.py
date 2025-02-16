@@ -1,22 +1,59 @@
 import re
 import logging
 
-logging.basicConfig(filename='mobile.log',level=logging.DEBUG)
+logging.basicConfig(filename='validation.log', level=logging.DEBUG)
+
+def name_check(name):
+    """Check if the name starts with a capital letter and has at least 3 characters."""
+    try:
+        if not re.match(r'^[A-Z][a-zA-Z]{2,}$', name):
+            logging.debug("Invalid name format: Must start with a capital letter and have at least 3 characters.")
+            return False
+        return True
+    except Exception as e:
+        logging.error(f"Error in name_check: {e}")
+        return False
+
+def check_mail(mail_to_check):
+    """Validate email format."""
+    try:
+        pattern = r'^[a-zA-Z0-9.+-_%]+@[a-zA-Z0-9.-]+\.[a-zA-Z]'
+        if not re.match(pattern, mail_to_check):
+            logging.error(f"Invalid email address: {mail_to_check}")
+            return False
+        return True
+    except Exception as e:
+        logging.error(f"Error in check_mail: {e}")
+        return False
 
 def check_mobile(number):
-
-    if len(number)!=13:
-        logging.error("checking the length of the mobile number")
-        return 'Invalid Number'
-    
-    if not re.match (r'^[91]',number):
-        logging.error("checking the country code")
-        return 'Invalid Number'
-    
-    return 'Valid Number'
-
+    """Validate mobile number: Must start with '91' and be 13 characters long."""
+    try:
+        if not re.match(r'^91[0-9]{10}$', number):
+            logging.error("Invalid mobile number: Must start with '91' and have 13 characters in total.")
+            return False
+        return True
+    except Exception as e:
+        logging.error(f"Error in check_mobile: {e}")
+        return False
 
 
-number=input("Enter the number: ")
-result = check_mobile(number)
-print(result)
+def main():
+    try:
+        first_name = input("Enter the First name: ")
+        print('Valid name!' if name_check(first_name) else 'Invalid name!')
+
+        last_name = input("Enter the Last name: ")
+        print('Valid name!' if name_check(last_name) else 'Invalid name!')
+
+        email = input("Enter an email address: ")
+        print('Valid email!' if check_mail(email) else 'Invalid email!')
+
+        number = input("Enter the mobile number: ")
+        print('Valid number!' if check_mobile(number) else 'Invalid number!')
+
+    except Exception as e:
+        logging.critical(f"Critical error in main: {e}")
+
+if __name__ == "__main__":
+    main()
